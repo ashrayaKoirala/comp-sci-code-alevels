@@ -34,8 +34,14 @@ export default function RapidFirePage() {
     const shuffled = [...allExercises].sort(() => Math.random() - 0.5);
     setShuffledExercises(shuffled);
     
-    // Set initial code for the first exercise
-    setUserCode(shuffled[0]?.starterCode || '');
+    // Set initial code for the first exercise if available
+    if (shuffled.length > 0 && shuffled[0]) {
+      setUserCode(shuffled[0].starterCode || '');
+    } else {
+      // Handle case where there are no exercises to display
+      // This might involve setting an error state or message
+      // For now, currentExercise will be undefined and the loading/empty state will show
+    }
   }, []);
   
   // Update localStorage when completed exercises change

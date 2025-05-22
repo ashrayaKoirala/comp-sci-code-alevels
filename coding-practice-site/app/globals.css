@@ -1,14 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 17, 24, 39;
-  --background-end-rgb: 24, 24, 63;
+  --foreground-rgb: 229, 231, 235; /* Tailwind gray-200 */
+  --background-start-rgb: 31, 41, 55; /* Tailwind gray-800 */
+  --background-end-rgb: 17, 24, 39; /* Tailwind gray-900 */
+
+  /* Accent colors for JS access if needed, or direct use in CSS */
+  --accent-color: 20, 184, 166; /* Teal 500 from tailwind.config.ts */
+  --accent-color-darker: 13, 148, 136; /* Teal 600 */
 }
 
 body {
+  font-family: 'Inter', sans-serif;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -16,6 +23,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     fixed;
+  overscroll-behavior-y: none; /* Prevents pull-to-refresh issues on some browsers */
 }
 
 @layer utilities {
@@ -54,17 +62,21 @@ body {
 
 /* Glassmorphism */
 .glass {
-  background: rgba(23, 37, 84, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(30, 41, 59, 0.6); /* slate-800 with opacity */
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(203, 213, 225, 0.1); /* coolGray-300 with opacity */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border-radius: 0.75rem; /* Slightly more rounded */
 }
 
 .glass-dark {
-  background: rgba(17, 24, 39, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(17, 24, 39, 0.75); /* gray-900 with opacity */
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  border-radius: 0.75rem; /* Slightly more rounded */
 }
 
 /* Code editor styles */
@@ -87,16 +99,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.7);
+  background: rgb(var(--background-end-rgb)); /* Darker part of the background */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(79, 70, 229, 0.7);
+  background: rgb(var(--accent-color)); /* Teal 500 */
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.8);
+  background: rgb(var(--accent-color-darker)); /* Teal 600 */
 }
 
 /* Glow effects */
@@ -123,16 +135,36 @@ body {
 
 /* Button styles */
 .btn-primary {
-  @apply bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50;
+  @apply bg-accent-500 hover:bg-accent-600 text-white font-semibold py-2.5 px-5 rounded-lg transition-all duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-accent-500 focus:ring-opacity-50 transform hover:-translate-y-0.5;
 }
 
 .btn-secondary {
-  @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+  @apply bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2.5 px-5 rounded-lg transition-all duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary-500 focus:ring-opacity-50 transform hover:-translate-y-0.5;
 }
 
-.btn-success {
-  @apply bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50;
+.btn-success { /* Consider renaming or ensuring it fits the new theme if green is not a primary accent */
+  @apply bg-green-500 hover:bg-green-600 text-white font-semibold py-2.5 px-5 rounded-lg transition-all duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 transform hover:-translate-y-0.5;
 }
+
+.btn-danger {
+  @apply bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-5 rounded-lg transition-all duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50 transform hover:-translate-y-0.5;
+}
+
+.btn-outline {
+  @apply bg-transparent hover:bg-accent-500 text-accent-500 font-semibold hover:text-white py-2 px-4 border border-accent-500 hover:border-transparent rounded-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-opacity-50;
+}
+
+
+/* Text selection style */
+::selection {
+  background-color: rgb(var(--accent-color)); /* Teal 500 */
+  color: rgb(var(--background-end-rgb)); /* Dark background for contrast */
+}
+::-moz-selection { /* Firefox */
+  background-color: rgb(var(--accent-color));
+  color: rgb(var(--background-end-rgb));
+}
+
 
 /* Badge styles */
 .badge {
@@ -140,32 +172,37 @@ body {
 }
 
 .badge-blue {
-  @apply bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100;
+  @apply bg-secondary-500 text-white; /* Using secondary color from Tailwind config */
 }
 
 .badge-green {
-  @apply bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100;
+  @apply bg-green-500 text-white;
 }
 
 .badge-yellow {
-  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100;
+  @apply bg-yellow-500 text-gray-900; /* Yellow needs dark text for contrast */
 }
 
 .badge-red {
-  @apply bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100;
+  @apply bg-red-500 text-white;
 }
 
 .badge-purple {
-  @apply bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-100;
+  @apply bg-primary-500 text-white; /* Using primary color from Tailwind config */
 }
+
+.badge-accent {
+  @apply bg-accent-500 text-white; /* New accent color */
+}
+
 
 /* Progress bar */
 .progress {
-  @apply overflow-hidden h-2 text-xs flex rounded bg-indigo-200;
+  @apply overflow-hidden h-3 text-xs flex rounded bg-gray-700; /* Darker background for progress track */
 }
 
 .progress-bar {
-  @apply flex flex-col justify-center text-center text-white whitespace-nowrap bg-indigo-500;
+  @apply flex flex-col justify-center text-center text-white whitespace-nowrap bg-accent-500; /* Use accent color */
 }
 
 /* Code syntax highlighting */
@@ -200,7 +237,7 @@ body {
 .token.char,
 .token.builtin,
 .token.inserted {
-  color: #10b981;
+  color: #5eead4; /* accent-300 */
 }
 
 .token.operator,
@@ -208,24 +245,24 @@ body {
 .token.url,
 .language-css .token.string,
 .style .token.string {
-  color: #a78bfa;
+  color: #c4b5fd; /* primary-300 */
 }
 
 .token.atrule,
 .token.attr-value,
 .token.keyword {
-  color: #3b82f6;
+  color: #93c5fd; /* secondary-300 */
 }
 
 .token.function,
 .token.class-name {
-  color: #f59e0b;
+  color: #fcd34d; /* Tailwind yellow-400 */
 }
 
 .token.regex,
 .token.important,
 .token.variable {
-  color: #ec4899;
+  color: #f472b6; /* Tailwind pink-400 */
 }
 
 .token.important,

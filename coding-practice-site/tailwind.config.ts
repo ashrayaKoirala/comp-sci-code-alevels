@@ -9,6 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        'accent': {
+          '50': '#f0fdfa',
+          '100': '#ccfbf1',
+          '200': '#99f6e4',
+          '300': '#5eead4',
+          '400': '#2dd4bf',
+          '500': '#14b8a6', // Teal 500 - Main Accent
+          '600': '#0d9488',
+          '700': '#0f766e',
+          '800': '#115e59',
+          '900': '#134e4a',
+          '950': '#042f2e',
+        },
         'primary': {
           '50': '#f5f3ff',
           '100': '#ede9fe',
@@ -75,6 +88,7 @@ const config: Config = {
         },
       },
       fontFamily: {
+        'sans': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', '"Noto Sans"', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"'],
         'code': ['Fira Code', 'monospace'],
       },
       typography: {
