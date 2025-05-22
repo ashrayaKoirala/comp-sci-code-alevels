@@ -83,9 +83,9 @@ export default function CodeEditor({
         data-language={language}
       />
       {runCode && (
-        <button 
+        <button
           onClick={handleRunCode}
-          className="absolute bottom-4 right-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md shadow-md transition-colors duration-200"
+          className="absolute bottom-4 right-4 btn-success" // Use the new btn-success style
         >
           Run Code
         </button>

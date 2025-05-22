@@ -11,49 +11,49 @@ interface ExerciseCardProps {
 
 export default function ExerciseCard({ exercise, isCompleted = false }: ExerciseCardProps) {
   const [animation, setAnimation] = useState(false);
-  
+
   // Trigger animation on mount
   useEffect(() => {
     setAnimation(true);
   }, []);
-  
-  // Helper function to get the color for difficulty badge
-  const getDifficultyColor = (difficulty: string) => {
+
+  // Helper function to get the badge class for difficulty
+  const getDifficultyBadgeClass = (difficulty: string) => {
     switch (difficulty.toLowerCase()) {
-      case 'easy': return 'bg-green-600';
-      case 'medium': return 'bg-yellow-600';
-      case 'hard': return 'bg-red-600';
-      case 'challenge': return 'bg-purple-600';
-      default: return 'bg-blue-600';
+      case 'easy': return 'badge badge-green'; // Using badge classes from globals.css
+      case 'medium': return 'badge badge-yellow';
+      case 'hard': return 'badge badge-red';
+      case 'challenge': return 'badge badge-purple';
+      default: return 'badge badge-blue';
     }
   }
-  
+
   return (
-    <div 
-      className={`bg-indigo-800/80 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 card-hover glass ${
+    <div
+      className={`rounded-lg overflow-hidden shadow-lg transition-all duration-300 card-hover glass-dark ${ // Using glass-dark for better contrast on new bg
         animation ? 'animate-fade-in' : 'opacity-0'
-      } ${isCompleted ? 'border-l-4 border-green-500' : ''}`}
+      } ${isCompleted ? 'border-l-4 border-accent-500' : 'border-l-4 border-transparent'}`} // Accent for completed
     >
-      <div className="p-6">
-        <div className="flex justify-between items-start mb-4">
-          <h2 className="text-xl font-bold line-clamp-2">{exercise.title}</h2>
-          <span className={`${getDifficultyColor(exercise.difficulty)} text-xs font-bold py-1 px-2 rounded-full`}>
+      <div className="p-6 flex flex-col h-full"> {/* Added flex flex-col h-full for consistent card height if needed */}
+        <div className="flex justify-between items-start mb-3"> {/* Reduced mb */}
+          <h2 className="text-xl font-bold text-gray-100 line-clamp-2">{exercise.title}</h2> {/* Brighter title */}
+          <span className={`${getDifficultyBadgeClass(exercise.difficulty)} text-xs`}> {/* Removed font-bold, py-1 px-2 as badge class handles it */}
             {exercise.difficulty}
           </span>
         </div>
-        <div className="text-blue-300 text-sm mb-4">{exercise.topic}</div>
-        <p className="mb-6 text-gray-300 line-clamp-3">{exercise.description.slice(0, 120)}...</p>
+        <div className="text-primary-400 text-sm mb-3">{exercise.topic}</div> {/* Use primary color variant */}
+        <p className="mb-5 text-gray-300 line-clamp-3 flex-grow">{exercise.description.slice(0, 120)}...</p> {/* Added flex-grow to push button down */}
         
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mt-auto"> {/* Added mt-auto to push this block to bottom */}
           <div className="text-xs text-gray-400">
-            <span className="mr-2">⏱️ {exercise.timeEstimate} min</span>
+            <span className="mr-3">⏱️ {exercise.timeEstimate} min</span> {/* Increased mr */}
             <span>🧩 Spec {exercise.specPoint}</span>
           </div>
-          <Link 
+          <Link
             href={`/exercises/${exercise.id}`}
-            className="block text-center bg-blue-600 hover:bg-blue-500 py-2 px-4 rounded transition-colors"
+            className={`btn-outline text-sm ${isCompleted ? 'border-accent-600 text-accent-600 hover:bg-accent-600 hover:text-white' : 'border-primary-500 text-primary-400 hover:bg-primary-500 hover:text-white'}`} // Custom outline button for card
           >
-            {isCompleted ? 'Review' : 'Start'} Exercise
+            {isCompleted ? 'Review' : 'Start'}
           </Link>
         </div>
       </div>
